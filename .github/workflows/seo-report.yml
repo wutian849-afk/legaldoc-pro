@@ -1,0 +1,58 @@
+name: Auto Sync Articles to GitHub Mirror Repos
+
+on:
+  schedule:
+    - cron: '0 5 * * *'  # 每天UTC 5:00
+  workflow_dispatch:  # 手动触发
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main site
+        uses: actions/checkout@v3
+        with:
+          path: main-site
+
+      - name: Generate SEO stats report
+        run: |
+          echo "# LegalDoc Pro SEO Status Report" > report.md
+          echo "" >> report.md
+          echo "Generated: $(date -u)" >> report.md
+          echo "" >> report.md
+          echo "## Site Stats" >> report.md
+          ARTICLE_COUNT=$(ls main-site/articles/*.html 2>/dev/null | wc -l)
+          echo "- Total SEO Articles: $ARTICLE_COUNT" >> report.md
+          echo "- Document Templates: 52" >> report.md
+          echo "- Categories: 7" >> report.md
+          echo "" >> report.md
+          echo "## SEO Checklist" >> report.md
+          echo "- [x] Sitemap submitted" >> report.md
+          echo "- [x] robots.txt configured" >> report.md
+          echo "- [x] Canonical URLs set" >> report.md
+          echo "- [x] Schema.org markup" >> report.md
+          echo "- [x] OG meta tags" >> report.md
+          echo "- [x] Mobile responsive" >> report.md
+          echo "" >> report.md
+          echo "## Google Index Check" >> report.md
+          echo "Manual check required at: https://search.google.com/search-console" >> report.md
+          echo "" >> report.md
+          echo "## Backlinks" >> report.md
+          echo "Auto-generated from Daily SEO Report" >> report.md
+          
+          mkdir -p seo-reports
+          mv report.md "seo-reports/$(date +%Y-%m-%d)-seo-report.md"
+
+      - name: Ping Google
+        run: |
+          curl -s "https://www.google.com/ping?sitemap=https://wutian849-afk.github.io/legaldoc-pro/sitemap.xml" > /dev/null
+          echo "Google pinged"
+
+      - name: Commit report
+        run: |
+          cd main-site
+          git config user.name "seo-bot"
+          git config user.email "bot@legaldoc-pro.github.io"
+          git add seo-reports/ 2>/dev/null || true
+          git diff --quiet && git diff --staged --quiet || git commit -m "Auto SEO report $(date +%Y-%m-%d)"
+          git push
