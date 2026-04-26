@@ -392,11 +392,37 @@ const PAYPAL_EMAIL = 'jingm1658@gmail.com';
 const USDT_ADDRESS = 'TP8ytAc7SPTf6xvKPs64wgFchB1uXPfHrD';
 
 function showPayment(name, price) {
+  if (parseInt(price) === 0) {
+    // Free document - show download directly
+    document.getElementById('modalTitle').textContent = name;
+    document.getElementById('modalDesc').textContent = 'This document is FREE';
+    document.getElementById('modalPrice').innerHTML = '🎉 Free Download';
+    document.getElementById('payAddress').style.display = 'none';
+    document.getElementById('paypalNote').style.display = 'none';
+    // Remove pay options, show download button
+    const modal = document.querySelector('.modal');
+    modal.querySelectorAll('.pay-option').forEach(el => el.style.display = 'none');
+    document.querySelector('.modal .free-download')?.remove();
+    const btn = document.createElement('div');
+    btn.className = 'free-download';
+    btn.innerHTML = `<div style="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;padding:20px;text-align:center;margin-bottom:12px">
+      <div style="font-size:32px;margin-bottom:8px">📄</div>
+      <p style="font-size:14px;color:#059669;font-weight:600;margin-bottom:4px">Ready to download!</p>
+      <p style="font-size:12px;color:#667085">This template is available as a free download.</p>
+      <p style="font-size:11px;color:#98a2b3;margin-top:8px">Contact admin@legaldocpro.com to request the template file.</p>
+    </div>`;
+    modal.insertBefore(btn, document.querySelector('.modal-close'));
+    document.getElementById('paymentModal').classList.add('active');
+    return;
+  }
   document.getElementById('modalTitle').textContent = name;
   document.getElementById('modalDesc').textContent = 'Complete your purchase';
-  document.getElementById('modalPrice').innerHTML = parseInt(price) === 0 ? 'Free' : `$${price}.00 <small>one-time</small>`;
+  document.getElementById('modalPrice').innerHTML = `$${price}.00 <small>one-time</small>`;
   document.getElementById('payAddress').style.display = 'none';
   document.getElementById('paypalNote').style.display = 'none';
+  // Show pay options again
+  document.querySelectorAll('.pay-option').forEach(el => el.style.display = 'flex');
+  document.querySelector('.free-download')?.remove();
   document.getElementById('paymentModal').classList.add('active');
 }
 
