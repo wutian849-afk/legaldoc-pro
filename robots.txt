@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://wutian849-afk.github.io/legaldoc-pro/articles/sitemap-articles.xml
+Sitemap: https://wutian849-afk.github.io/legaldoc-pro/sitemap.xml
