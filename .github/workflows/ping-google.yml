@@ -1,0 +1,19 @@
+name: Ping Google Search Console
+
+on:
+  push:
+    branches: [ master ]
+  schedule:
+    - cron: '0 6 * * 1'  # 每周一早上6点
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Google for AI Tools Nav
+        run: |
+          echo "Pinging Google for sitemap updates..."
+          # 使用Google Indexing API通知
+          curl -s "https://www.google.com/ping?sitemap=https://wutian849-afk.github.io/ai-tools-nav/sitemap.xml"
+          curl -s "https://www.google.com/ping?sitemap=https://wutian849-afk.github.io/legaldoc-pro/sitemap.xml"
+          echo "Done"
