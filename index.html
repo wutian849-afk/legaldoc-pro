@@ -1,0 +1,280 @@
+
+<!-- Document Grid -->
+<div class="doc-section" id="documents">
+<h2 data-result-count>All Documents</h2>
+<div class="doc-grid" id="docGrid">
+</div>
+</div>
+
+<!-- FAQ -->
+<div id="faq" class="faq-section">
+<h2>Frequently Asked Questions</h2>
+<div class="faq-item">
+<div class="faq-q" onclick="toggleFaq(this)">Are these documents legally binding? <span class="arrow">▼</span></div>
+<div class="faq-a">Our templates are drafted to meet general legal standards. However, enforceability depends on your specific situation and jurisdiction. For high-stakes matters, we recommend review by a licensed attorney.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q" onclick="toggleFaq(this)">Do I need a lawyer? <span class="arrow">▼</span></div>
+<div class="faq-a">Not necessarily. Our templates cover many common situations. But we are not a substitute for a lawyer — if you have complex needs, high-value transactions, or litigation concerns, consult an attorney.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q" onclick="toggleFaq(this)">How do I download a document? <span class="arrow">▼</span></div>
+<div class="faq-a">Free templates are available instantly. Premium templates require one-time payment via PayPal or USDT. After payment, you'll receive the download link via email.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q" onclick="toggleFaq(this)">Can I customize the templates? <span class="arrow">▼</span></div>
+<div class="faq-a">Yes! All documents are provided in editable formats (DOCX/PDF). You can modify them to fit your specific needs using any word processor.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q" onclick="toggleFaq(this)">What states/countries do these cover? <span class="arrow">▼</span></div>
+<div class="faq-a">Our templates are based on general US legal principles. Some documents include state-specific variations. International templates are noted where available.</div>
+</div>
+</div>
+
+<!-- Payment Modal -->
+<div class="modal-overlay" id="paymentModal">
+<div class="modal">
+<h2 id="modalTitle">Document Purchase</h2>
+<p class="sub" id="modalDesc">Select your payment method</p>
+<div class="price-tag" id="modalPrice">$19.99</div>
+<div class="pay-option" onclick="payPaypal()">
+<div class="pay-icon" style="background:#e8f0fe">💳</div>
+<div class="pay-info"><h3>PayPal</h3><p>Copy email → Open PayPal to send payment</p></div>
+</div>
+<div class="pay-option" onclick="payUSDT()">
+<div class="pay-icon" style="background:#e6f7e6">₮</div>
+<div class="pay-info"><h3>USDT Crypto (TRC20)</h3><p>Instant · No fees</p></div>
+</div>
+<div class="pay-note" id="payAddress" style="display:none;background:#f8f9fb;border-radius:8px;padding:14px;text-align:left">
+<p style="color:#888;font-size:11px;margin-bottom:6px">💡 USDT (TRC20) Address — Copy and transfer:</p>
+<p style="color:#2563eb;font-size:12px;word-break:break-all;font-family:monospace" id="usdtAddress">TP8ytAc7SPTf6xvKPs64wgFchB1uXPfHrD</p>
+<p style="color:#aaa;font-size:10px;margin-top:6px">Send screenshot to admin@legaldocpro.com for confirmation</p>
+</div>
+<div class="pay-note" id="paypalNote" style="display:none;background:#f8f9fb;border-radius:8px;padding:14px">
+<p style="color:#888;font-size:11px">✅ PayPal email copied! Open <a href="https://paypal.com" target="_blank" style="color:#2563eb">paypal.com</a> → Click "Send" → Paste email</p>
+<p style="color:#555;font-size:10px;margin-top:4px">Email: <span id="paypalEmail" style="color:#2563eb;font-weight:600">jingm1658@gmail.com</span></p>
+</div>
+<button class="modal-close" onclick="closeModal()">Cancel</button>
+</div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+<div style="max-width:600px;margin:0 auto">
+<p><strong style="color:#fff">LegalDoc Pro</strong> — Professional Legal Document Templates</p>
+<p style="margin-top:12px">
+<a href="#categories">Documents</a>
+<a href="#faq">FAQ</a>
+<a href="#" onclick="event.preventDefault();document.getElementById('disclaimerModal').classList.add('active')">Disclaimer</a>
+<a href="mailto:admin@legaldocpro.com">Contact</a>
+</p>
+<p style="margin-top:20px;border-top:1px solid #2a2a3e;padding-top:20px">
+<strong style="color:#93c5fd">LegalDoc Pro is not a law firm.</strong> We provide document templates and information only. No attorney-client relationship. Not legal advice. <a href="#" onclick="event.preventDefault();document.getElementById('disclaimerModal').classList.add('active')">Full Disclaimer</a>
+</p>
+<p>© 2026 LegalDoc Pro. All rights reserved.</p>
+</div>
+</div>
+
+<script>
+// ===================== DOCUMENT DATA =====================
+const documents = [
+  // Business & Contracts
+  {id:'d1', name:'Non-Disclosure Agreement (NDA)', cat:'Business', desc:'Protect confidential information in business relationships', icon:'🤝', color:'bg-blue', price:0},
+  {id:'d2', name:'Independent Contractor Agreement', cat:'Business', desc:'Define scope, payment, and terms for contractors', icon:'👤', color:'bg-green', price:0},
+  {id:'d3', name:'Business Contract (General)', cat:'Business', desc:'Standard business agreement template', icon:'📋', color:'bg-blue', price:0},
+  {id:'d4', name:'LLC Operating Agreement', cat:'Business', desc:'Define ownership, management, and operations for your LLC', icon:'🏢', color:'bg-purple', price:19},
+  {id:'d5', name:'Partnership Agreement', cat:'Business', desc:'Formalize terms between business partners', icon:'🤝', color:'bg-orange', price:19},
+  {id:'d6', name:'Service Agreement', cat:'Business', desc:'Standard terms for service providers and clients', icon:'📄', color:'bg-blue', price:9},
+  {id:'d7', name:'Invoice Template', cat:'Business', desc:'Professional invoice for freelancers and small businesses', icon:'🧾', color:'bg-green', price:0},
+  {id:'d8', name:'Bill of Sale', cat:'Business', desc:'Document transfer of ownership for personal property', icon:'📝', color:'bg-cyan', price:0},
+  {id:'d9', name:'Non-Compete Agreement', cat:'Business', desc:'Restrict former employees from competing', icon:'🚫', color:'bg-red', price:19},
+  {id:'d10', name:'Non-Solicitation Agreement', cat:'Business', desc:'Prevent solicitation of clients and employees', icon:'🔒', color:'bg-purple', price:19},
+  {id:'d11', name:'Employment Offer Letter', cat:'Business', desc:'Formal job offer with salary and terms', icon:'📨', color:'bg-blue', price:0},
+  {id:'d12', name:'Employee Handbook', cat:'Business', desc:'Company policies, code of conduct, and procedures', icon:'📚', color:'bg-orange', price:29},
+  {id:'d13', name:'Consulting Agreement', cat:'Business', desc:'Terms for consulting services and deliverables', icon:'💼', color:'bg-green', price:9},
+  {id:'d14', name:'Mutual NDA', cat:'Business', desc:'Two-way confidentiality for joint ventures', icon:'🔄', color:'bg-cyan', price:0},
+
+  // Real Estate
+  {id:'d15', name:'Residential Lease Agreement', cat:'Real Estate', desc:'Standard lease between landlord and tenant', icon:'🏠', color:'bg-blue', price:19},
+  {id:'d16', name:'Commercial Lease Agreement', cat:'Real Estate', desc:'Lease for commercial/retail property', icon:'🏢', color:'bg-purple', price:29},
+  {id:'d17', name:'Room Rental Agreement', cat:'Real Estate', desc:'Simple roommate or room rental contract', icon:'🚪', color:'bg-green', price:9},
+  {id:'d18', name:'Eviction Notice', cat:'Real Estate', desc:'Notice to vacate for non-payment or lease violation', icon:'⚠️', color:'bg-red', price:0},
+  {id:'d19', name:'Property Management Agreement', cat:'Real Estate', desc:'Authorize a manager to operate your property', icon:'📋', color:'bg-orange', price:19},
+  {id:'d20', name:'Intent to Purchase Real Estate', cat:'Real Estate', desc:'Letter of intent to buy property', icon:'📝', color:'bg-blue', price:9},
+  {id:'d21', name:'Quitclaim Deed', cat:'Real Estate', desc:'Transfer property interest without warranty', icon:'📜', color:'bg-cyan', price:19},
+  {id:'d22', name:'Sublease Agreement', cat:'Real Estate', desc:'Permission for tenant to sublet to another', icon:'↪️', color:'bg-green', price:9},
+  {id:'d23', name:'Rent Increase Notice', cat:'Real Estate', desc:'Legal notice of rent increase', icon:'📈', color:'bg-pink', price:0},
+  {id:'d24', name:'Move-In/Move-Out Checklist', cat:'Real Estate', desc:'Document property condition for deposits', icon:'✅', color:'bg-blue', price:0},
+
+  // Estate Planning
+  {id:'d25', name:'Last Will and Testament', cat:'Estate Planning', desc:'Distribute your assets according to your wishes', icon:'📜', color:'bg-purple', price:29},
+  {id:'d26', name:'Living Trust', cat:'Estate Planning', desc:'Avoid probate, manage assets during incapacity', icon:'🏛️', color:'bg-blue', price:39},
+  {id:'d27', name:'Living Will (Advance Directive)', cat:'Estate Planning', desc:'Document your end-of-life medical wishes', icon:'❤️', color:'bg-pink', price:0},
+  {id:'d28', name:'Power of Attorney (Financial)', cat:'Estate Planning', desc:'Authorize someone to manage your finances', icon:'💰', color:'bg-green', price:19},
+  {id:'d29', name:'Medical Power of Attorney', cat:'Estate Planning', desc:'Authorize healthcare decisions on your behalf', icon:'🏥', color:'bg-cyan', price:0},
+  {id:'d30', name:'Last Will & Testament (with Trust)', cat:'Estate Planning', desc:'Comprehensive will including testamentary trust', icon:'📚', color:'bg-orange', price:49},
+
+  // Family & Personal
+  {id:'d31', name:'Child Care Authorization Form', cat:'Family', desc:'Temporary care authorization for minors', icon:'👶', color:'bg-pink', price:0},
+  {id:'d32', name:'Divorce Settlement Agreement', cat:'Family', desc:'Property division, support, and custody terms', icon:'💔', color:'bg-red', price:39},
+  {id:'d33', name:'Prenuptial Agreement', cat:'Family', desc:'Asset and property agreement before marriage', icon:'💍', color:'bg-purple', price:49},
+  {id:'d34', name:'Child Support Agreement', cat:'Family', desc:'Formalize child support payment terms', icon:'👨‍👧', color:'bg-blue', price:19},
+  {id:'d35', name:'Parenting Plan (Custody)', cat:'Family', desc:'Co-parenting schedule and responsibilities', icon:'🗓️', color:'bg-green', price:19},
+  {id:'d36', name:'Pet Custody Agreement', cat:'Family', desc:'Pet ownership and care arrangement', icon:'🐾', color:'bg-orange', price:0},
+  {id:'d37', name:'Child Travel Consent', cat:'Family', desc:'Consent for minor to travel without both parents', icon:'✈️', color:'bg-cyan', price:0},
+
+  // Intellectual Property
+  {id:'d38', name:'Trademark License Agreement', cat:'IP', desc:'License to use a trademark', icon:'™️', color:'bg-blue', price:29},
+  {id:'d39', name:'Copyright Assignment', cat:'IP', desc:'Transfer copyright ownership to another party', icon:'©️', color:'bg-purple', price:19},
+  {id:'d40', name:'IP Assignment Agreement', cat:'IP', desc:'Assign intellectual property rights', icon:'💡', color:'bg-green', price:19},
+  {id:'d41', name:'Software License Agreement', cat:'IP', desc:'Terms for software use and distribution', icon:'💻', color:'bg-cyan', price:29},
+  {id:'d42', name:'Work-for-Hire Agreement', cat:'IP', desc:'Ensure created work belongs to the client', icon:'✍️', color:'bg-orange', price:9},
+  {id:'d43', name:'Licensing Agreement (General)', cat:'IP', desc:'General terms for licensing IP rights', icon:'🔑', color:'bg-blue', price:29},
+
+  // Employment
+  {id:'d44', name:'Employment Contract', cat:'Employment', desc:'Full employment terms and conditions', icon:'📋', color:'bg-green', price:19},
+  {id:'d45', name:'Severance Agreement', cat:'Employment', desc:'Terms for employee separation with benefits', icon:'🚪', color:'bg-red', price:29},
+  {id:'d46', name:'Performance Improvement Plan', cat:'Employment', desc:'Structured plan for employee performance issues', icon:'📈', color:'bg-orange', price:9},
+  {id:'d47', name:'Independent Contractor vs Employee Checklist', cat:'Employment', desc:'Determine proper worker classification', icon:'✅', color:'bg-blue', price:0},
+
+  // Financial
+  {id:'d48', name:'Promissory Note', cat:'Financial', desc:'Record a loan agreement with repayment terms', icon:'💵', color:'bg-green', price:9},
+  {id:'d49', name:'Loan Agreement', cat:'Financial', desc:'Formal loan contract between lender and borrower', icon:'🏦', color:'bg-blue', price:19},
+  {id:'d50', name:'Personal Financial Statement', cat:'Financial', desc:'Statement of assets, liabilities, and net worth', icon:'📊', color:'bg-purple', price:0},
+  {id:'d51', name:'Debt Settlement Agreement', cat:'Financial', desc:'Agreement to settle debt for less than owed', icon:'🤝', color:'bg-orange', price:19},
+  {id:'d52', name:'I Owe You (IOU)', cat:'Financial', desc:'Simple acknowledgment of debt', icon:'📝', color:'bg-cyan', price:0},
+];
+
+// Category mapping
+const categories = [
+  {id:'Business', icon:'💼', color:'bg-blue', desc:'Contracts, NDAs, employment, partnerships'},
+  {id:'Real Estate', icon:'🏠', color:'bg-green', desc:'Leases, deeds, evictions, property'},
+  {id:'Estate Planning', icon:'📜', color:'bg-purple', desc:'Wills, trusts, powers of attorney'},
+  {id:'Family', icon:'👨‍👩‍👧‍👦', color:'bg-pink', desc:'Divorce, custody, prenups, care'},
+  {id:'IP', icon:'™️', color:'bg-cyan', desc:'Copyright, trademark, licensing'},
+  {id:'Employment', icon:'💼', color:'bg-orange', desc:'Contracts, severance, policies'},
+  {id:'Financial', icon:'💰', color:'bg-green', desc:'Loans, notes, settlements'},
+];
+
+// ===================== RENDER =====================
+function getDocPrice(doc) {
+  if (doc.price === 0) return '<span class="badge-free">FREE</span>';
+  return `<span class="badge-paid">$${doc.price}</span>`;
+}
+
+function renderCategories() {
+  const grid = document.getElementById('catGrid');
+  grid.innerHTML = categories.map(cat => {
+    const count = documents.filter(d => d.cat === cat.id).length;
+    const docs = documents.filter(d => d.cat === cat.id).slice(0, 4);
+    return `<div class="cat-card" onclick="document.getElementById('documents').scrollIntoView({behavior:'smooth'}); filterByCat('${cat.id}')">
+      <div class="cat-icon ${cat.color}">${cat.icon}</div>
+      <h3>${cat.id}</h3>
+      <p class="cat-count">${count} documents · ${cat.desc}</p>
+      <ul class="cat-docs">
+        ${docs.map(d => `<li>${d.name}</li>`).join('')}
+        ${count > 4 ? `<li style="color:#2563eb;font-weight:600">+${count-4} more →</li>` : ''}
+      </ul>
+    </div>`;
+  }).join('');
+}
+
+let currentCat = 'all';
+
+function filterByCat(cat) {
+  currentCat = cat;
+  document.getElementById('searchInput').value = '';
+  renderDocs(cat);
+}
+
+function renderDocs(cat='all', search='') {
+  const filtered = documents.filter(d => {
+    if (cat !== 'all' && d.cat !== cat) return false;
+    if (search) {
+      const q = search.toLowerCase();
+      return d.name.toLowerCase().includes(q) || d.desc.toLowerCase().includes(q) || d.cat.toLowerCase().includes(q);
+    }
+    return true;
+  });
+  const grid = document.getElementById('docGrid');
+  grid.innerHTML = filtered.map(d => `
+    <div class="doc-card" onclick="showPayment('${d.name}','${d.price}')">
+      <div class="doc-icon ${d.color}">${d.icon}</div>
+      <h3>${d.name}</h3>
+      <p>${d.desc}</p>
+      <div class="doc-meta">
+        <span>${d.cat}</span>
+        ${d.price === 0 ? '<span class="badge-free">FREE</span>' : `<span class="doc-price">$${d.price}</span>`}
+      </div>
+    </div>
+  `).join('');
+  // Update result count
+  const header = document.querySelector('[data-result-count]');
+  if (header) header.textContent = `${cat === 'all' ? 'All' : cat} Documents (${filtered.length})`;
+}
+
+function filterDocs() {
+  renderDocs(currentCat, document.getElementById('searchInput').value);
+}
+
+// ===================== FAQ =====================
+function toggleFaq(el) {
+  el.classList.toggle('active');
+  const answer = el.nextElementSibling;
+  answer.classList.toggle('visible');
+}
+
+// ===================== DISCLAIMER =====================
+function acknowledgeDisclaimer() {
+  document.getElementById('disclaimerModal').classList.remove('active');
+  localStorage.setItem('legaldoc_disclaimer', 'acknowledged');
+}
+
+(function() {
+  if (!localStorage.getItem('legaldoc_disclaimer')) {
+    document.getElementById('disclaimerModal').classList.add('active');
+  }
+})();
+
+// ===================== PAYMENT =====================
+const PAYPAL_EMAIL = 'jingm1658@gmail.com';
+const USDT_ADDRESS = 'TP8ytAc7SPTf6xvKPs64wgFchB1uXPfHrD';
+
+function showPayment(name, price) {
+  document.getElementById('modalTitle').textContent = name;
+  document.getElementById('modalDesc').textContent = 'Complete your purchase';
+  const priceNum = parseInt(price);
+  document.getElementById('modalPrice').innerHTML = priceNum === 0 ? 'FREE' : `$${priceNum}.00`;
+  document.getElementById('payAddress').style.display = 'none';
+  document.getElementById('paypalNote').style.display = 'none';
+  document.getElementById('paymentModal').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('paymentModal').classList.remove('active');
+}
+
+function payPaypal() {
+  document.getElementById('payAddress').style.display = 'none';
+  document.getElementById('paypalNote').style.display = 'block';
+  document.getElementById('paypalEmail').textContent = PAYPAL_EMAIL;
+  navigator.clipboard.writeText(PAYPAL_EMAIL).catch(() => {});
+}
+
+function payUSDT() {
+  document.getElementById('paypalNote').style.display = 'none';
+  document.getElementById('payAddress').style.display = 'block';
+  document.getElementById('usdtAddress').textContent = USDT_ADDRESS;
+  navigator.clipboard.writeText(USDT_ADDRESS).catch(() => {});
+}
+
+document.getElementById('paymentModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ===================== INIT =====================
+renderCategories();
+renderDocs();
+</script>
+</body>
+</html>
